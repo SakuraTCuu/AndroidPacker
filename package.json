@@ -4,7 +4,7 @@
   "description": "",
   "main": "sakura.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run": "node sakura.js"
   },
   "author": "",
   "license": "ISC",

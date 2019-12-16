@@ -9,9 +9,7 @@ const os = require('os');
 const fs = require("fs");
 const readline = require("readline");
 const parseString = require('xml2js').parseString;
-// const exec = require('child_process').exec;
-const cmd = require('node-cmd');
-
+const child_process = require('child_process')
 //项目名称
 let curPinYinName, originPinYinName, originAppName, curAppName, srcDir, url, tarDir, sdkPath;
 
@@ -50,31 +48,49 @@ let tarPathPicList;  //array
 
 //android 打包开始
 let AndroidPacker = function () {
-    //先清理项目
-
-    // let cmdStr = srcDir + '\\gradlew';
-    // exec(cmdStr, function (err, stdout, stderr) {
-    //     if (err) {
-    //         console.log('get weather api error:' + stderr);
-    //     } else {
-    //         let data = JSON.parse(stdout);
-    //         console.log(data);
-    //     }
-    // });
     console.log("开始签名打包-->>");
-    let clean = tarDir + "\\gradlew.bat gradlew clean";
-    let release = tarDir + "\\gradlew assembleRelease ";
+    //写个.bat文件
+    // fs.writeFile(path, data, (err) => {
+    //     if (err) {
+    //         throw err;
+    //     }
+    //     console.log('.bat创建成功,开始执行打包');
+    //     console.log('path111-->>', path);
+    //     // cmd.run(path);
 
-    // let signFile = `E:\\APK\\sign.jks`;
-    // let sign = `-Pandroid.injected.signing.store.file=${signFile} -Pandroid.injected.signing.store.password=123456 -Pandroid.injected.signing.key.alias=qicheng -Pandroid.injected.signing.key.password=123456`
+    //     exec(path, function (err, stdout, stderr) {
+    //         if (err) {
+    //             console.log('get weather api error:' + stderr.toString());
+    //         } else {
+    //             console.log('path-->>', path);
+    //             let data = JSON.parse(stdout);
+    //             console.log(data);
+    //         }
+    //     });
+    // })
 
-    // release += sign;
-    console.log(clean);
-    console.log(release);
+    //复制的项目根目录
+    let dir = tarDir;
+    //先清理项目
+    let cmdClean = "gradlew clean"
+    let cmdBuild = "gradlew assembleRelease"
 
-    cmd.run(clean);
-    cmd.run(release);
-
+    child_process.exec(cmdClean, { cwd: dir, encoding: "utf-8" }, function (error, stdout, stderr) {
+        if (error !== null) {
+            console.log("exec error" + error)
+        }
+        else console.log("成功")
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+    })
+    child_process.exec(cmdBuild, { cwd: dir, encoding: "utf-8" }, function (error, stdout, stderr) {
+        if (error !== null) {
+            console.log("exec error" + error)
+        }
+        else console.log("成功")
+        console.log('stdout: ' + stdout);
+        console.log('stderr: ' + stderr);
+    })
 }
 
 //修改包名
@@ -456,15 +472,5 @@ function main() {
     });
 }
 
-// main();
+main();
 // AndroidPacker();
-
-// cmd.run("C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\\devenv.exe");
-//运行笔记本
-// cmd.get("", function (err, data) {
-//     console.log("data-->", data);
-// });
-cmd.run("e:");
-cmd.run("E:\\Project1\\mengxianghua");
-cmd.run("gradlew clean");
-cmd.run("gradlew assembleRelease");
