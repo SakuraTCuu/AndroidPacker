@@ -11,7 +11,7 @@ const readline = require("readline");
 const parseString = require('xml2js').parseString;
 const child_process = require('child_process')
 //项目名称
-let curPinYinName, originPinYinName, originAppName, curAppName, srcDir, url, tarDir, sdkPath;
+let curPinYinName, originPinYinName, originAppName, curAppName, srcDir, url, tarDir, sdkPath, isPacker, isReplaceImg;
 
 //替换字符串
 let originXMLStr, endXMLStr, originGradleStr, endGradleStr, originUrlStr, endUrlStr, originAppStr, endAppStr, originAppNameStr, endAppNameStr, originSDKPath, endSDKPath;
@@ -43,7 +43,7 @@ let basePicPath;
 
 let modifyFileList = new Array();
 let modifyPicList = new Array();
-let tarPathPicList;  //array
+let tarPathPicList; //array
 
 
 //android 打包开始
@@ -78,16 +78,14 @@ let AndroidPacker = function () {
     child_process.exec(cmdClean, { cwd: dir, encoding: "utf-8" }, function (error, stdout, stderr) {
         if (error !== null) {
             console.log("exec error" + error)
-        }
-        else console.log("成功")
+        } else console.log("成功")
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
     })
     child_process.exec(cmdBuild, { cwd: dir, encoding: "utf-8" }, function (error, stdout, stderr) {
         if (error !== null) {
             console.log("exec error" + error)
-        }
-        else console.log("成功")
+        } else console.log("成功")
         console.log('stdout: ' + stdout);
         console.log('stderr: ' + stderr);
     })
@@ -102,20 +100,15 @@ let modifyPacker = function () {
         if (fileName === "AndroidManifest.xml") {
             //修改FileProvider  android:authorities
             modifyXML(srcPath);
-        }
-        else if (fileName === "build.gradle") {
+        } else if (fileName === "build.gradle") {
             modifyGradle(srcPath);
-        }
-        else if (fileName === "Constants.java") {
+        } else if (fileName === "Constants.java") {
             modifyUrl(srcPath);
-        }
-        else if (fileName === "MyApplication.java") {
+        } else if (fileName === "MyApplication.java") {
             modifyApplication(srcPath);
-        }
-        else if (fileName === "strings.xml") {
+        } else if (fileName === "strings.xml") {
             modifyString(srcPath);
-        }
-        else if (fileName === "local.properties") {
+        } else if (fileName === "local.properties") {
             modifySDKPath(srcPath);
         }
     }
@@ -138,9 +131,11 @@ let modifyPicFun = function () {
                 //不管异步了 
                 if (i === tarPathPicList.length - 1) {
                     //进行打包操作
-                    setTimeout(() => {
-                        AndroidPacker();
-                    }, 10000);
+                    if (isPacker == "true") {
+                        setTimeout(() => {
+                            AndroidPacker();
+                        }, 10000);
+                    }
                 }
             }
         }
@@ -419,6 +414,8 @@ function init(result) {
     url = result['root']['url'][0];
     basePicPath = result['root']['basePicPath'][0];
     sdkPath = result['root']['sdk'][0];
+    isPacker = result['root']['isPacker'][0];
+    isReplaceImg = result['root']['isReplaceImg'][0];
     //替换字符串
     originXMLStr = `android:authorities="com.example.qicheng.${originPinYinName}.fileProvider"`;
     endXMLStr = `android:authorities="com.example.qicheng.${curPinYinName}.fileProvider"`;
@@ -467,8 +464,10 @@ function main() {
     copyFolder(srcDir, tarDir, () => {
         //包名修改
         modifyPacker();
-        //图片替换
-        modifyPicFun();
+        if (isReplaceImg == "true") {
+            //图片替换
+            modifyPicFun();
+        }
     });
 }
 

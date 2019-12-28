@@ -1,18 +1,18 @@
 {
-  "name": "createpro",
-  "version": "1.0.0",
-  "description": "",
-  "main": "sakura.js",
-  "scripts": {
-    "run": "node sakura.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "readline": "^1.3.0",
-    "xml2js": "^0.4.22"
-  },
-  "dependencies": {
-    "node-cmd": "^3.0.0"
-  }
+    "name": "createpro",
+    "version": "1.0.0",
+    "description": "",
+    "main": "sakura.js",
+    "scripts": {
+        "start": "node sakura.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "readline": "^1.3.0",
+        "xml2js": "^0.4.22"
+    },
+    "dependencies": {
+        "node-cmd": "^3.0.0"
+    }
 }

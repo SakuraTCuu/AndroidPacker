@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <root>
     <!--替换项目地址 -->
-    <srcDir>E:\Project2\lingyongqian</srcDir>
+    <srcDir>E:\Project2\miaoxiaqianbao</srcDir>
 
     <!-- 原项目名 -->
-    <originAppName>零用钱</originAppName>
+    <originAppName>瞄下钱包</originAppName>
     <!-- 原项目拼音 -->
-    <originPinYinName>lingyongqian</originPinYinName>
+    <originPinYinName>miaoxiaqianbao</originPinYinName>
     <!-- 现项目名 -->
-    <curAppName>榕树花</curAppName>
+    <curAppName>梦想花</curAppName>
     <!-- 现项目拼音 -->
-    <curPinYinName>rongshuhua</curPinYinName>
+    <curPinYinName>mengxianghua</curPinYinName>
     <!-- url地址 -->
-    <url>http://sloijy65.cn/</url>
+    <url>http://muvflj55.cn/</url>
     <!-- 未来解决每个人android sdk位置不同 -->
     <sdk>E\:\\software\\android_sdk</sdk>
-
+    <!-- 替换完项目是否进行打包? -->
+    <isPacker>false</isPacker>
+    <!-- 是否替换图片 -->
+     <isReplaceImg>false</isReplaceImg>
     <!--  TODO  后续增加自动读取目录下图片功能,自动替换,不需配置 -->
     <basePicPath>C:\Users\Administrator\Desktop\pic\</basePicPath>
     <!-- 
